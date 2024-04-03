@@ -16,7 +16,7 @@ import java.io.OutputStream;
 @Service
 public class AuthenticationService implements IAuthenticationService, UserDetailsService {
 
-    IAuthenticationRepository iAuthenticationRepository;
+    AuthenticationDBRepository iAuthenticationRepository;
 
     public AuthenticationService(IAuthenticationRepository iAuthenticationRepository) {
         this.iAuthenticationRepository = iAuthenticationRepository;
@@ -48,7 +48,7 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
                         .password(customer.getPassword())
                         .build();
             }
-            catch (IOException e){
+            catch (Exception e){
                 throw new RuntimeException(e);
             }
 
