@@ -12,11 +12,16 @@ public class PrimesController {
 
     IPrimesService iPrimesService;
 
-    public PrimesController(IPrimesService iPrimesService){
+    private final MQSender mqSender;
+
+    public PrimesController(IPrimesService iPrimesService, MQSender mqSender){
         this.iPrimesService = iPrimesService;
+        this.mqSender=mqSender;
     }
     @GetMapping("/{n}")
     public boolean isPrime(@PathVariable int n){
-        return iPrimesService.isPrime(n);
+        boolean result = iPrimesService.isPrime(n);
+        mqSender.sendMessage(n, result);
+        return result;
     }
 }
